@@ -1,0 +1,31 @@
+{
+  "name": "very-insecure-password-manager",
+  "version": "1.0.0",
+  "description": "I make no claims about the security of this password manager.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShiftySlothe/very-insecure-password-manager.git"
+  },
+  "keywords": [
+    "password",
+    "manager",
+    "insecure",
+    "useless",
+    "do",
+    "not",
+    "use"
+  ],
+  "author": "Randy Piper",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ShiftySlothe/very-insecure-password-manager/issues"
+  },
+  "homepage": "https://github.com/ShiftySlothe/very-insecure-password-manager#readme",
+  "dependencies": {
+    "commander": "^9.0.0"
+  }
+}
