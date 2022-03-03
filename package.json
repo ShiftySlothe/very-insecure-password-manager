@@ -4,7 +4,9 @@
   "description": "I make no claims about the security of this password manager.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node index.ts",
+    "build": "build"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,19 @@
   },
   "homepage": "https://github.com/ShiftySlothe/very-insecure-password-manager#readme",
   "dependencies": {
+    "argon2": "^0.28.5",
     "commander": "^9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-tc": "^21.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jest": "^25.7.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unicorn": "^41.0.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "ts-node": "^10.6.0",
+    "typescript": "^4.6.2"
   }
 }
