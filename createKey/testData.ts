@@ -21,5 +21,13 @@ export const badPasswords = [
 const goodPassword1 = "ABc123.?!";
 const goodPassword2 = "12345aB@";
 const goodPassword3 = "yuioB1..";
+const goodPasswordOnceTrimmed = " yuioB1.. ";
 
-export const goodPasswords = [goodPassword1, goodPassword2, goodPassword3];
+export const goodPasswords = [
+  goodPassword1,
+  goodPassword2,
+  goodPassword3,
+  goodPasswordOnceTrimmed,
+];
+
+//
