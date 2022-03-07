@@ -1,4 +1,4 @@
-// Bad Password Examples
+// Bad Password Examples - all expect to throw error
 
 const justLetters = "aaaAaaaAvdsf";
 const justNumbers = "111223677655";
@@ -6,6 +6,7 @@ const noUpperCase = "asb.123//sa";
 const noSymbol = "Abc123y1asd";
 const noNumbers = "Asb.Yuj/as";
 const noLetters = "123456././";
+const spaceInMiddle = "Abc12 .?1Ajc"
 
 export const badPasswords = [
   justLetters,
@@ -14,6 +15,7 @@ export const badPasswords = [
   noSymbol,
   noNumbers,
   noLetters,
+  spaceInMiddle
 ];
 
 // Good password examples
