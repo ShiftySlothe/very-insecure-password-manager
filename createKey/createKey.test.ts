@@ -1,5 +1,5 @@
 import { preprocessNewPassword } from "./createKey";
-import { badPasswords } from "./testData";
+import { badPasswords, goodPasswords } from "./testData";
 
 // Password schema is
 // Must contain letters, numbers, uppercase, lowercase, symbol
@@ -21,4 +21,9 @@ test.each(badPasswords)(
   }
 );
 
-
+test.each(goodPasswords)(
+  "preprocessNewPassword accepts good passwords",
+  (goodPassword) => {
+    expect(() => preprocessNewPassword(goodPassword)).not.toThrowError();
+  }
+);
