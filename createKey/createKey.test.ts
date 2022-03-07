@@ -1,3 +1,4 @@
+import { text } from "stream/consumers";
 import { preprocessNewPassword } from "./createKey";
 import { badPasswords, goodPasswords } from "./testData";
 
@@ -27,3 +28,10 @@ test.each(goodPasswords)(
     expect(() => preprocessNewPassword(goodPassword)).not.toThrowError();
   }
 );
+
+const mock = jest.fn(preprocessNewPassword);
+
+test("preprocessNewPassword returns a good password", () => {
+  mock(goodPasswords[0]);
+  expect(mock).toReturnWith(goodPasswords[0]);
+});

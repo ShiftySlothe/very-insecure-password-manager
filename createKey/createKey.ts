@@ -4,11 +4,7 @@ export function preprocessNewPassword(password: string) {
   password = password.trim();
   password = password.normalize();
   checkPasswordMeetsRequirements(password);
-  //   const salt = randomBytes(256);
-  //   scrypt(password, salt, 64, (err, derivedKey) => {
-  //     if (err) throw err;
-  //     console.log(derivedKey.toString("hex")); // '3745e48...08d59ae'
-  //   });
+  return password;
 }
 
 function checkPasswordMeetsRequirements(password: string) {
