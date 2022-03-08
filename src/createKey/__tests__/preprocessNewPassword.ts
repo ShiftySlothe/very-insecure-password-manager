@@ -1,6 +1,5 @@
-import { text } from "stream/consumers";
-import { preprocessNewPassword } from "./createKey";
-import { badPasswords, goodPasswords } from "./testData";
+import { preprocessNewPassword } from "../createKey";
+import { badPasswords, goodPasswords } from "../testData";
 
 // Password schema is
 // Must contain letters, numbers, uppercase, lowercase, symbol
