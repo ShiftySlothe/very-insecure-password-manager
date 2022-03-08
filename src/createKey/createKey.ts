@@ -1,15 +1,33 @@
 import bcrypt from "bcrypt";
 import { pbkdf2Sync, randomBytes, randomUUID } from "crypto";
 
-export async function createKey(
-  password: string,
-  hashRounds: number,
-  saltSize: number
-) {
+const KEY_LENGTH = 64;
+
+export function XORKeys(passwordKey: Buffer, secretKey: Buffer): Buffer {
+  if (passwordKey.length !== secretKey.length)
+    throw new Error("Key must be of the same length");
+
+  const buffer = Buffer.alloc(passwordKey.length);
+  for (let i = 0; i < passwordKey.length; i++) {
+    buffer[i] = passwordKey[i] ^ secretKey[i];
+  }
+
+  return buffer;
+}
+
+export type CreateKeyOptions = {
+  passwordHashRounds: number;
+  saltSize: number;
+  keyGenIterations: number;
+};
+
+export async function createKey(password: string, opts: CreateKeyOptions) {
   password = preprocessNewPassword(password);
-  const hash = await hashPassword(password, 20);
-  const salt = createSalt(saltSize);
-  
+  const hash = await hashPassword(password, opts.passwordHashRounds);
+  const salt = await createSalt(opts.saltSize);
+  const key = createPBKDF2Key(hash, salt, opts.keyGenIterations, KEY_LENGTH);
+
+  return key;
 }
 
 export function preprocessNewPassword(password: string): string {
@@ -41,7 +59,7 @@ export function createPBKDF2Key(
   return pbkdf2Sync(password, salt, iterations, length, "sha256");
 }
 
-export function createSecretKey(): string {
+export function createSecretPassword(): string {
   return randomUUID({ disableEntropyCache: true });
 }
 
