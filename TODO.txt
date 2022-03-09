@@ -1,8 +1,20 @@
 Must have
 - TEST preprocessNewPassword does not cover normalize test case
 - TEST hashPassword cannot run, then runs...
+- TEST createKey - intergration test? do we need to test this as each function is tested?
+- TEST createKeyPair, does it need a test?
+- TEST Create test to ensure userKey class variables are assigned correctly
+- TEST Create test to ensure passwords don't need to meet regex
+- TEST CreateSecretKey test
+    - Ensure CreateSecretKey does NOT hash the secret
+
+- INTERGRATION TEST = userKey Class and workflow
+
+- TEST FAILURE Test suite fails for unknown reason
 
 Optional 
 - Optional Regex's for passwords, select the password schema 
 - Optional hash rounds for password hashing
-
+- Types rather than Regex?
+- Types for number range in createKeyOpts
+- Key length const defined in createKey could be a global interchangable variable at start up

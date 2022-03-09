@@ -9,18 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userKey_1 = require("./createKey/userKey");
-const password = "IsabeL!?123";
-const passwordKeyOptions = {
-    passwordHashRounds: 10,
-    saltSize: 64,
-    keyGenIterations: 1000000,
-};
-const generateKeys = (password) => __awaiter(void 0, void 0, void 0, function* () {
-    const userKeyGenerator = new userKey_1.GenerateUserKey(password, passwordKeyOptions, passwordKeyOptions);
-    const { publicKey, privateKey } = yield userKeyGenerator.createUserKeys();
-    console.log("Public Key: ", publicKey);
-    console.log("Private Key: ", privateKey);
-});
-generateKeys(password);
-//# sourceMappingURL=index.js.map
+const createKey_1 = require("../createKey");
+test("createKey creates key given password", () => __awaiter(void 0, void 0, void 0, function* () {
+    const saltString = "salt";
+    const salt = Buffer.from(saltString, "utf-8");
+    const key = yield (0, createKey_1.createPBKDF2Key)("password", salt, 6, 1);
+    const keyString = key.toString("hex");
+    expect(keyString).toBe("18");
+}));
+//# sourceMappingURL=createPBKDF2Key.js.map

@@ -1,8 +1,15 @@
 import bcrypt from "bcrypt";
-import { pbkdf2Sync, randomBytes, randomUUID } from "crypto";
+import { generateKeyPair, pbkdf2, randomBytes, randomUUID } from "crypto";
+import util from "util";
+
+const pbkdf2Promise = util.promisify(pbkdf2);
+const generateKeyPairPromise = util.promisify(generateKeyPair);
 
 const KEY_LENGTH = 64;
 
+// export function generateKeyPairs(passphrase: Buffer) {
+//   generateKeyPairs
+// }
 export function XORKeys(passwordKey: Buffer, secretKey: Buffer): Buffer {
   if (passwordKey.length !== secretKey.length)
     throw new Error("Key must be of the same length");
@@ -21,7 +28,10 @@ export type CreateKeyOptions = {
   keyGenIterations: number;
 };
 
-export async function createKey(password: string, opts: CreateKeyOptions) {
+export async function createPasswordKey(
+  password: string,
+  opts: CreateKeyOptions
+) {
   password = preprocessNewPassword(password);
   const hash = await hashPassword(password, opts.passwordHashRounds);
   const salt = await createSalt(opts.saltSize);
@@ -30,6 +40,20 @@ export async function createKey(password: string, opts: CreateKeyOptions) {
   return key;
 }
 
+export async function createSecretKey(
+  password: string,
+  opts: CreateKeyOptions
+) {
+  const salt = await createSalt(opts.saltSize);
+  const key = createPBKDF2Key(
+    password,
+    salt,
+    opts.keyGenIterations,
+    KEY_LENGTH
+  );
+
+  return key;
+}
 export function preprocessNewPassword(password: string): string {
   password = password.trim();
   password = password.normalize();
@@ -50,13 +74,14 @@ export async function createSalt(size: number): Promise<Buffer> {
   return randomBytes(size);
 }
 
-export function createPBKDF2Key(
+export async function createPBKDF2Key(
   password: string,
   salt: Buffer,
   iterations: number,
   length: number
-) {
-  return pbkdf2Sync(password, salt, iterations, length, "sha256");
+): Promise<Buffer> {
+  const key = await pbkdf2Promise(password, salt, iterations, length, "sha256");
+  return key;
 }
 
 export function createSecretPassword(): string {
@@ -75,4 +100,27 @@ function checkPasswordMeetsRequirements(password: string): void {
 
   if (!password.match(passwordRegex) || !password.match(whiteSpaceRegex))
     throw new Error(`Password: ${password} does not meet RegEx`);
+}
+
+type KeyPair = {
+  publicKey: string;
+  privateKey: string;
+};
+
+export async function createKeyPair(passphrase: Buffer): Promise<KeyPair> {
+  const keyPair = await generateKeyPairPromise("ec", {
+    namedCurve: "sect571k1",
+    publicKeyEncoding: {
+      type: "spki",
+      format: "pem",
+    },
+    privateKeyEncoding: {
+      type: "pkcs8",
+      format: "pem",
+      cipher: "aes-256-cbc",
+      passphrase: passphrase.toString(),
+    },
+  });
+
+  return keyPair;
 }
