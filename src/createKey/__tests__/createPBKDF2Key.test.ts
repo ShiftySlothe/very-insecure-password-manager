@@ -1,4 +1,4 @@
-import { createPBKDF2Key } from "../createKey";
+import { createPBKDF2Key } from "../createKeys";
 
 test("createKey creates key given password", async () => {
   const saltString = "salt";

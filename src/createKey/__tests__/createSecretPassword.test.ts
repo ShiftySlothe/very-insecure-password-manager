@@ -1,4 +1,4 @@
-import { createSecretPassword } from "../createKey";
+import { createSecretPassword } from "../createKeys";
 
 test("createSecretPassword creates random keys", () => {
   const key1 = createSecretPassword();

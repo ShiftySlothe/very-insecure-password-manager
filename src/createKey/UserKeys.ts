@@ -1,16 +1,16 @@
 import {
-  createPasswordKey,
+  createNewPasswordKey,
   CreateKeyOptions,
   createSecretPassword,
   XORKeys,
   createKeyPair,
-  createSecretKey,
-} from "./createKey";
+  createNewSecretKey,
+} from "./createKeys";
 
 type UserKeyInfo = {
   publicKey: string;
   privateKey: string;
-  accountUnlockKey: Buffer;
+  secret: string;
 };
 
 export class GenerateUserKey {
@@ -42,14 +42,17 @@ export class GenerateUserKey {
   }
 
   private async createPasswordKey() {
-    this.passwordKey = await createPasswordKey(
+    this.passwordKey = await createNewPasswordKey(
       this.password,
       this.passwordKeyOptions
     );
   }
 
   private async createSecretKey() {
-    this.secretKey = await createSecretKey(this.secret, this.secretKeyOptions);
+    this.secretKey = await createNewSecretKey(
+      this.secret,
+      this.secretKeyOptions
+    );
   }
 
   private async createAccountUnlockKey() {
@@ -74,8 +77,11 @@ export class GenerateUserKey {
     const userKeyInfo: UserKeyInfo = {
       publicKey: this.publicKey,
       privateKey: this.privateKey,
-      accountUnlockKey: this.accountUnlockKey,
+      secret: this.secret,
     };
+
     return userKeyInfo;
   }
 }
+
+

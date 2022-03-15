@@ -26,34 +26,39 @@ export type CreateKeyOptions = {
   passwordHashRounds: number;
   saltSize: number;
   keyGenIterations: number;
+  salt?: Buffer;
 };
 
-export async function createPasswordKey(
+export async function createNewPasswordKey(
   password: string,
   opts: CreateKeyOptions
 ) {
   password = preprocessNewPassword(password);
   const hash = await hashPassword(password, opts.passwordHashRounds);
-  const salt = await createSalt(opts.saltSize);
-  const key = createPBKDF2Key(hash, salt, opts.keyGenIterations, KEY_LENGTH);
-
-  return key;
-}
-
-export async function createSecretKey(
-  password: string,
-  opts: CreateKeyOptions
-) {
-  const salt = await createSalt(opts.saltSize);
   const key = createPBKDF2Key(
-    password,
-    salt,
+    hash,
+    opts.salt,
     opts.keyGenIterations,
     KEY_LENGTH
   );
 
   return key;
 }
+
+export async function createNewSecretKey(
+  password: string,
+  opts: CreateKeyOptions
+) {
+  const key = createPBKDF2Key(
+    password,
+    opts.salt,
+    opts.keyGenIterations,
+    KEY_LENGTH
+  );
+
+  return key;
+}
+
 export function preprocessNewPassword(password: string): string {
   password = password.trim();
   password = password.normalize();
@@ -117,7 +122,7 @@ export async function createKeyPair(passphrase: Buffer): Promise<KeyPair> {
     privateKeyEncoding: {
       type: "pkcs8",
       format: "pem",
-      cipher: "aes-256-cbc",
+      cipher: PK_ENCRPT_ALGO,
       passphrase: passphrase.toString(),
     },
   });

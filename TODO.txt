@@ -18,3 +18,6 @@ Optional
 - Types rather than Regex?
 - Types for number range in createKeyOpts
 - Key length const defined in createKey could be a global interchangable variable at start up
+
+Persistance 
+- Hash will need to be persisted, currently only sits within createNewPasswordKey

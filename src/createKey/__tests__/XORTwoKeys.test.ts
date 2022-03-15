@@ -1,4 +1,4 @@
-import { XORKeys } from "../createKey";
+import { XORKeys } from "../createKeys";
 
 test("XOR Keys: Buffers of different length throw error", () => {
   const a = Buffer.from("1");

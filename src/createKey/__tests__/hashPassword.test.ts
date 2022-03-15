@@ -1,4 +1,4 @@
-import { hashPassword } from "../createKey";
+import { hashPassword } from "../createKeys";
 import bcrypt from "bcrypt";
 test("hashPassword returns hash given hello", async () => {
   const hash = await hashPassword("hello", 1);

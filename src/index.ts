@@ -1,12 +1,18 @@
-import { CreateKeyOptions, hashPassword } from "./createKey/createKey";
-import { GenerateUserKey } from "./createKey/userKey";
+import { CreateKeyOptions, createSalt } from "./createKey/createKeys";
+import { GenerateUserKey } from "./createKey/UserKeys";
 
 const password = "IsabeL!?123";
+let generatedPublicKey;
+let encryptedPrivateKey;
+let generatedSecret;
 
 const passwordKeyOptions: CreateKeyOptions = {
-  passwordHashRounds: 10,
+  passwordHashRounds: PW_HASH_RDS,
   saltSize: 64,
   keyGenIterations: 1000000,
+};
+const addSaltToOpts = async () => {
+  passwordKeyOptions.salt = await createSalt(passwordKeyOptions.saltSize);
 };
 
 const generateKeys = async (password: string) => {
@@ -16,10 +22,17 @@ const generateKeys = async (password: string) => {
     passwordKeyOptions
   );
 
-  const { publicKey, privateKey } = await userKeyGenerator.createUserKeys();
+  const { publicKey, privateKey, secret } =
+    await userKeyGenerator.createUserKeys();
+
+  generatedPublicKey = publicKey;
+  encryptedPrivateKey = privateKey;
+  generatedSecret = secret;
 
   console.log("Public Key: ", publicKey);
   console.log("Private Key: ", privateKey);
 };
+
+addSaltToOpts();
 
 generateKeys(password);

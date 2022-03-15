@@ -1,4 +1,4 @@
-import { preprocessNewPassword } from "../createKey";
+import { preprocessNewPassword } from "../createKeys";
 import { badPasswords, goodPasswords } from "../testData";
 
 // Password schema is
