@@ -1,4 +1,4 @@
-Must have
+Must have tests
 - TEST preprocessNewPassword does not cover normalize test case
 - TEST hashPassword cannot run, then runs...
 - TEST createKey - intergration test? do we need to test this as each function is tested?
@@ -7,7 +7,7 @@ Must have
 - TEST Create test to ensure passwords don't need to meet regex
 - TEST CreateSecretKey test
     - Ensure CreateSecretKey does NOT hash the secret
-
+- TEST password key has salt when passing to createpasswordkey - maybe create a type
 - INTERGRATION TEST = userKey Class and workflow
 
 - TEST FAILURE Test suite fails for unknown reason

@@ -1,12 +1,9 @@
-import { createDecipheriv } from "crypto";
-import { hashPassword } from "../createKey/createKeys";
+import bcrypt from "bcrypt";
 
 export async function checkUserPassword(
   password: string,
   passwordHash: string
 ) {
-  const hashedPassword = await hashPassword(this.password, PW_HASH_RDS);
-  if (hashedPassword !== passwordHash) {
-    throw new Error("Hashed passwords must be equal");
-  }
+  const match = await bcrypt.compare(password, passwordHash);
+  return match;
 }

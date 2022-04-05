@@ -1,4 +1,5 @@
 import { hashPassword } from "../createKey/createKeys";
+import { checkUserPassword } from "./decryptKey";
 
 export class DecryptUserKey {
   private password: string;
@@ -33,7 +34,10 @@ export class DecryptUserKey {
   }
 
   async checkPassword() {
-    
+    const match = await checkUserPassword(this.password, this.passwordHash);
+    if (!match) {
+      throw new Error("Password does not match hash");
+    }
   }
 
   async;
